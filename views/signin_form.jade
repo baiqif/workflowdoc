@@ -1,0 +1,13 @@
+.card.card-container
+	img#profile-img.profile-img-card(src='//ssl.gstatic.com/accounts/ui/avatar_2x.png')
+	p#profile-name.profile-name-card
+	form.form-signin(action='/login',method='post')
+		span#reauth-email.reauth-email
+		input#username.form-control(name="username",type='email', placeholder='CSIRO Email', required='', autofocus='')
+		input#password.form-control(name="password",type='password', placeholder='Password', required='')
+		#remember.checkbox
+			label
+				input(type='checkbox', value='remember-me')
+				|	Remember me
+		button.btn.btn-lg.btn-primary.btn-block.btn-signin(type='submit') Sign in 
+	a.btn.btn-success.btn-block(href='/auth/google') Sign in with Google

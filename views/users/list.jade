@@ -1,0 +1,9 @@
+extends ../layout.jade
+
+block content
+    .container(style='margin-top: 50px;')
+        h3 Users
+            each user in users
+                .media
+                   = user.displayName
+                   = user.email

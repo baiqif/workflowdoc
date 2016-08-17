@@ -1,0 +1,68 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport",content="width=device-width, initial-scale=1")
+		meta(name="description",content="")
+		meta(name="author",content="")
+		link(rel="icon",href="../../favicon.ico")
+		title= title
+		block styles
+			link(rel="stylesheet",href="css/bootstrap/bootstrap.min.css")
+			link(href='/css/style.css', rel='stylesheet')
+	body(data-spy="scroll",data-target=".scrollspy")
+		block header
+			nav.navbar.navbar-inverse.navbar-fixed-top
+				.container
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href='#') Workflow Document
+					nav
+						ul.nav.nav-pills.pull-right
+							li.active(role='presentation')
+								a(href='#') Home
+							li(role='presentation')
+								a(href='#') About
+							script(type='text/javascript').
+								var current_path = window.location.pathname;
+								console.log(current_path);
+							
+							unless isSigninForm
+								if user
+									li.dropdown(role='presentation')
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+											= user.displayName 
+											strong.caret
+										ul.dropdown-menu.pull-right.login-dropdown(style='padding: 0px; padding-bottom: 0px;')
+											.card.card-container
+												.row
+													.col-lg-4
+														img#profile-img.profile-img-card(src='//ssl.gstatic.com/accounts/ui/avatar_2x.png')
+													.col-lg-8
+														p.text-left
+															strong 
+																= user.displayName
+														p.text-left.small 
+															= user.email
+	
+												a.btn.btn-success.btn-block(href='/logout') Sign out
+	
+								else
+									li.dropdown(role='presentation')
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+											| Sign In 
+											strong.caret
+										.dropdown-menu.pull-right.login-dropdown(style='padding: 0px; padding-bottom: 0px;')
+												include ./signin_form.jade
+		block content
+		block footer
+			hr
+			p © Company 2014
+		block scripts
+			script(src="js/jquery/jquery.min.js")
+			script(src="js/bootstrap/bootstrap.min.js")

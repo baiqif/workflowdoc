@@ -1,0 +1,8 @@
+extends layout
+append styles
+	// Custom styles for this template
+	link(href='/css/jumbotron.css', rel='stylesheet')
+
+block content
+	div(style='margin-top: 50px;')
+		include ./signin_form.jade

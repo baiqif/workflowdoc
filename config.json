@@ -1,0 +1,18 @@
+{
+    "DATA_BACKEND":"mongodb",
+    "MEMCACHE_URL": "127.0.0.1:11211",
+    "MONGO_URL":"mongodb://localhost:27017",
+    "MONGO_DATABASE":"workflowdoc",
+    "MYSQL_USER":"",
+    "MYSQL_PASSWORD":"",
+    "MYSQL_HOST":"",
+    "NODE_ENV":"",
+    "OAUTH2_CLIENT_ID":"",
+    "OAUTH2_CLIENT_SECRET":"",
+    "OAUTH2_CALLBACK":"",
+    "GOOGLE_CLIENT_ID":"323318861114-ds9ka10408jbivp5u35b2ihfma5fjb4t.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET":"8GMWhjEQHjBXb7mBox3ym2-e",
+    "GOOGLE_CALLBACK_URL":"https://workflowdoc-baiqif.c9users.io/oauth2callback",
+    "PORT":8080,
+    "SECRET":"keyboardcat"
+}

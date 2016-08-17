@@ -1,0 +1,21 @@
+{
+  "name": "passport-google-oauth2-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "~4.2.0",
+    "jade": ">= 0.0.0",
+    "passport": ">=0.3.2",
+    "body-parser":"~1.0.0",
+    "cookie-parser":"~1.0.1",
+    "passport-google-oauth2": ">= 0.1.6",
+    "express-session":"*",
+    "mongodb": "^2.1.18",
+    "multer": "^1.2.0",
+    "nconf": "^0.8.4",
+    "url-join":"~1.1.0",
+    "bootstrap":"*",
+    "mongoose":"4.5.9",
+    "winston":"*",
+    "passport-ldapauth":"~0.5.0"
+  }
+}
