@@ -16,6 +16,7 @@
     "bootstrap":"*",
     "mongoose":"4.5.9",
     "winston":"*",
-    "passport-ldapauth":"~0.5.0"
+    "passport-ldapauth":"~0.5.0",
+    "bootstrap-validator":"*"
   }
 }

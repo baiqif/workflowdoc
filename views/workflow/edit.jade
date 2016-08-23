@@ -1,0 +1,72 @@
+extend new
+
+block scripts
+	script(type='text/javascript').
+		$(document).ready(function(){
+			initGoDiagram();
+			initGoPalette();
+			myDiagram.model = go.Model.fromJson(!{JSON.stringify(workflow.doc)});
+			$('#workflowinfoform input#uri').val("#{workflow.workflowid}")
+			$('#workflowinfoform input#title').val("#{workflow.title}")
+			$('#workflowinfoform textarea#description').val("#{workflow.description}")
+			$('#workflowinfoform input#keywords').val("#{workflow.keywords}")
+			$('#workflowinfoform #is_public').prop('checked', #{workflow.is_public})
+			$('label#displayuri').text("URI:  #{workflow.workflowid}");
+			
+			$("form#workflowinfoform").change(function() {
+				$('button#SaveBtn').removeAttr('disabled');
+			});
+			
+			$("#SaveBtn").click(function(){
+		        var workflowdoc = myDiagram.model.toJson();
+		        var title = $('#workflowinfoform input#title').val().trim();
+		        var description = $('#workflowinfoform #description').val()
+		        
+		        if (title){
+		        	$('#workflowinfoform').submit(function(eventObj) {
+					   
+					    $(this).append("<input type='hidden' name='doc' value='"+workflowdoc+"'>");
+					    return true;
+					});
+		        	$('#workflowinfoform').trigger('submit');
+		        }
+		        else{
+		        	$('.nav-tabs a[href="#metadata"]').tab('show');
+		        }
+		    }); 
+		});
+
+	
+block footer
+	hr
+
+block main_nav_header
+	div
+		ol.breadcrumb
+			li.breadcrumb-item
+				a(href='/workflow') Workflow
+			li.breadcrumb-item
+				a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
+			li.breadcrumb-item.active
+				a(href='#') Edit		
+
+block primary-actionbar
+	.col-md-12(style='margin-top: 10px')
+		.btn-toolbar
+			button#DeleteBtn.btn.btn-danger.pull-left(data-toggle='modal', data-target='#confirm-delete') Delete
+			button#SaveBtn.btn.btn-success.pull-right Update
+			button#CancelBtn.btn.btn-primary.pull-right Cancel
+			
+	#confirm-delete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true')
+					myModalLabel.modal-title Confirm Delete
+				.modal-body
+					p You are about to delete this workflow, this procedure is irreversible.
+					p Do you want to proceed?
+	
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+					a.btn.btn-danger(href='/workflow/delete/#{workflow.workflowid}') Delete

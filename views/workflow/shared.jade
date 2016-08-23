@@ -1,0 +1,45 @@
+extend ../layout
+
+
+append content
+	.container
+		if workflows.length
+			.content
+				table.table.table-striped
+					thead
+						tr
+							th Title
+							th Created by
+							th Created at
+					tbody
+						each workflow in workflows
+							tr
+								td 
+									a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
+									.small #{workflow.description}
+								td 
+									if workflow.creator 
+										#{workflow.creator.displayName}
+								td #{workflow.updated_at}
+
+
+		else
+			.row
+				.col-md-6.col-md-offset-3(style='margin-top: 100px;margin-bottom: 50px;')
+					.card
+						.card-block(style='margin-left: 10px;margin-right: 10px;margin-bottom: 10px;')
+							img.card-img-top.center-block(src='/images/glass-warning-sign.png', alt='Warning',width='200', height='200')
+							h3.card-title OOPS, seems you do not have any workflows!
+							p
+							.card-text 
+								Do you want to create a new workflow?  
+								a.btn.btn-success(href='/workflow/new') Create
+
+block main_nav_header
+	ol.breadcrumb
+		li.breadcrumb-item.active
+			a(href='/workflow') My workflows
+		li.breadcrumb-item
+			b 
+				a(href='/workflow/public').active Shared with me
+

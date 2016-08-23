@@ -1,5 +1,7 @@
-function init() {
-    if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+var mydiagram;
+var myPalette;
+function initGoDiagram(){
+  if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
     var $ = go.GraphObject.make;  // for conciseness in defining templates
 
     myDiagram =
@@ -15,7 +17,7 @@ function init() {
 
     // when the document is modified, add a "*" to the title and enable the "Save" button
     myDiagram.addDiagramListener("Modified", function(e) {
-      var button = document.getElementById("SaveButton");
+      var button = document.getElementById("SaveBtn");
       if (button) button.disabled = !myDiagram.isModified;
       var idx = document.title.indexOf("*");
       if (myDiagram.isModified) {
@@ -192,10 +194,13 @@ function init() {
     myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
     myDiagram.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
 
-    load();  // load an initial diagram from some JSON text
+    //load();  // load an initial diagram from some JSON text
+}
 
-    // initialize the Palette that is on the left side of the page
-    myPalette =
+function initGoPalette(){
+  if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+    var $ = go.GraphObject.make;  // for conciseness in defining templates
+   myPalette =
       $(go.Palette, "myPaletteDiv",  // must name or refer to the DIV HTML element
         {
           maxSelectionCount: 1,
@@ -246,8 +251,8 @@ function init() {
             { points: new go.List(go.Point).addAll([new go.Point(0, 0), new go.Point(30, 0), new go.Point(30, 40), new go.Point(60, 40)]), dash: [3,2] }
           ])
         });
-  
-  }
+};
+
 
   // Make all ports on a node visible when the mouse is over the node
   function showPorts(node, show) {
@@ -258,15 +263,9 @@ function init() {
       });
   }
 
-
-  // Show the diagram's model in JSON format that the user may edit
-  function save() {
-    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-    myDiagram.isModified = false;
-  }
-  function load() {
-    myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
-  }
+  // function load() {
+  //   myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+  // }
 
   // add an SVG rendering of the diagram at the end of this page
   function makeSVG() {

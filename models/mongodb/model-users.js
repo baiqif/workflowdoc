@@ -5,12 +5,12 @@ var Schema = mongoose.Schema;
 var config = require('../../config');
 var urljoin = require('url-join');
 
-mongoose.connect(urljoin(config.get('MONGO_URL'),config.get('MONGO_DATABASE')));
+var userconn = mongoose.connect(urljoin(config.get('MONGO_URL'),config.get('MONGO_DATABASE')));
 
 var userSchema = new Schema({
   displayName: String,
-  email: { type: String, required: true, unique: true },
-//   password: { type: String, required: true },
+  userid:{ type: String, required: true, unique: true },
+  email: String,
   admin: {type:Boolean,default:false},
   location: String,
   created_at: Date,
@@ -32,5 +32,5 @@ userSchema.pre('save', function(next) {
 });
 
 
-var User = mongoose.model('User', userSchema);
+var User = userconn.model('User', userSchema);
 module.exports = User;

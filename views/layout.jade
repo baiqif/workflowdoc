@@ -9,11 +9,23 @@ html(lang="en")
 		link(rel="icon",href="../../favicon.ico")
 		title= title
 		block styles
-			link(rel="stylesheet",href="css/bootstrap/bootstrap.min.css")
+			link(rel="stylesheet",href="/css/bootstrap/bootstrap.min.css")
 			link(href='/css/style.css', rel='stylesheet')
+		block general_scripts
+			script(src="/js/jquery/jquery.min.js")
+			script(src="/js/bootstrap/bootstrap.min.js")
+			script(type='text/javascript').
+				$(document).ready(function(){
+					$('#CancelBtn').click(function(){
+						parent.history.back();
+						return false;
+					});
+				})
+		block scripts	
+			
 	body(data-spy="scroll",data-target=".scrollspy")
 		block header
-			nav.navbar.navbar-inverse.navbar-fixed-top
+			nav.navbar.navbar-inverse
 				.container
 					.navbar-header
 						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
@@ -21,17 +33,14 @@ html(lang="en")
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
-						a.navbar-brand(href='#') Workflow Document
+
 					nav
 						ul.nav.nav-pills.pull-right
 							li.active(role='presentation')
 								a(href='#') Home
 							li(role='presentation')
 								a(href='#') About
-							script(type='text/javascript').
-								var current_path = window.location.pathname;
-								console.log(current_path);
-							
+
 							unless isSigninForm
 								if user
 									li.dropdown(role='presentation')
@@ -60,9 +69,8 @@ html(lang="en")
 										.dropdown-menu.pull-right.login-dropdown(style='padding: 0px; padding-bottom: 0px;')
 												include ./signin_form.jade
 		block content
+			block 	main_nav_header
+
 		block footer
 			hr
-			p © Company 2014
-		block scripts
-			script(src="js/jquery/jquery.min.js")
-			script(src="js/bootstrap/bootstrap.min.js")
+			p © CSIRO CLW 2016

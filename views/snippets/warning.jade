@@ -1,0 +1,8 @@
+.card.card-container(style='margin-top: 60px;')
+                img.card-img-top.center-block(src='/images/glass-warning-sign.png', alt='Warning',width='200', height='200')
+                .card-title
+                    h3.text-center #{error}
+                .card-text
+                    #{details}
+                    block error_actions
+                        button.btn.btn-primary.center-block OK

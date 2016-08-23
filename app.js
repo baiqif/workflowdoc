@@ -66,19 +66,23 @@ passport.use(new GoogleStrategy({
       var User= modelfactory.getModel("users");
       
       var registered_user = new User({
+        userid:profile.email,
         displayName : profile.displayName,
         email : profile.email,
         admin : false
       });
       
-      User.find({ email:profile.email},function(err,user){
-        if (user.length==0)
-          registered_user.save(function(err){
-            if(err) throw err
+      User.find({ userid:profile.email},function(err,users){
+        if (users.length==0)
+          registered_user.save(function(err,user){
+            if(err) throw err;
+            // console.log("new user "+user._id)  
+            return done(null, user);
           });
+        // console.log("existing user "+users[0]._id)  
+        return done(null, users[0]);
       });
 
-      return done(null, profile);
     });
   }
 ));
@@ -86,6 +90,17 @@ passport.use(new GoogleStrategy({
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+// sometimes, code sequence doese matter
+function errorHandler(err, req, res, next) {
+  logger.error(err)
+  res.status(500);
+  res.render('error', { error: err });
+}
+
+app.use(errorHandler);
+
+
 app.use( express.static(__dirname + '/public'));
 app.use( cookieParser()); 
 app.use( bodyParser.json());
@@ -93,16 +108,25 @@ app.use( bodyParser.urlencoded({
 	extended: true
 }));
 
-app.use(errorHandler);
+
 
 
 app.use(session({secret: config.get('SECRET'), 
                saveUninitialized: true,
                resave: true}));
+
 app.use( passport.initialize());
 app.use( passport.session());
+app.use(function(req,res,next){
+    res.locals.user = req.user || null;
+    next();
+});
+
+
+
 
 require('./routes')(app);
+
 
 
 // GET /auth/google
@@ -129,7 +153,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: [
 
 app.get('/oauth2callback', passport.authenticate('google'), function(req, res) {
     if (req.isAuthenticated()){
-      res.redirect(req.session.returnTo || '/');
+      res.redirect(req.session.returnTo || '/workflow');
        delete req.session.returnTo;
     }else{
       res.redirect('/signin')
@@ -162,15 +186,11 @@ app.post('/login', function(req, res, next) {
       return res.send({ success : false, message : 'authentication failed' });
     }
     return res.send({ success : true, message : 'authentication succeeded' });
-  })(req, res, next);
+  });
 });
 
 
-function errorHandler(err, req, res, next) {
-  logger.error(err)
-  res.status(500);
-  res.render('error', { error: err });
-}
+
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0",function(){
    var port = server.address().port;

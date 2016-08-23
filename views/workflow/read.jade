@@ -1,0 +1,57 @@
+extend ../layout
+
+append scripts
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.6.7/go-debug.js")
+    script(src="/js/gograph_impl.js")
+    script(type='text/javascript').
+        $(document).ready(function(){
+             initGoDiagram();
+             myDiagram.model = go.Model.fromJson(!{JSON.stringify(workflow.doc)});
+            })
+
+append main_nav_header
+    ol.breadcrumb
+      li.breadcrumb-item
+        a(href='/workflow') Workflow
+      li.breadcrumb-item.active
+        a(href='#') #{workflow.title}
+
+append content
+        .col-md-2
+            h3 #{workflow.title}
+            p #{workflow.description}
+            p 
+                if workflow.is_public
+                    | Public
+                else
+                    | Private
+            p #{workflow.keywords}
+            
+            p Last updated: 
+                small #{workflow.updated_at}
+            hr
+            block secondary-actionbar
+                if workflow.is_writable
+                    .btn-toolbar
+                        button#DeleteBtn.btn.btn-danger.pull-left(data-toggle='modal', data-target='#confirm-delete') Delete
+                        button#CancelBtn.btn.btn-primary.pull-right Cancel
+                        a.btn.btn-success.pull-right(href='/workflow/edit/#{workflow.workflowid}') Edit
+                    
+                #confirm-delete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                button.close(type='button', data-dismiss='modal', aria-hidden='true')
+                                myModalLabel.modal-title Confirm Delete
+                            .modal-body
+                                p You are about to delete this workflow, this procedure is irreversible.
+                                p Do you want to proceed?
+                            
+                            .modal-footer
+                                button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                                a.btn.btn-danger(href='/workflow/delete/#{workflow.workflowid}') Delete
+            
+            
+        .col-md-10
+            .col-md-12
+                #myDiagramDiv(style='border: solid 1px gray; height: 620px')
