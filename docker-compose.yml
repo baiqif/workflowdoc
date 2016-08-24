@@ -6,12 +6,13 @@ volumes:
 
 services:
   workflowdoc:
-    image: node:4-onbuild
+    build:
+        dockerfile: Dockerfile
     volumes:
         - /srv/workflowdoc/src: /projects/workflowdoc/src 
     environment:
         - RUN_MODE=docker
-        - MONGO_HOST=dids_mongo
+        - MONGO_HOST=mongo
     ports:
         3000:3000
     depends_on:
