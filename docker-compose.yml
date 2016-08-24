@@ -1,0 +1,23 @@
+version: '1'
+
+volumes:
+    hello:
+        driver: local
+
+services:
+  workflowdoc:
+    image: node:4-onbuild
+    volumes:
+        - /projects/workflowdoc/src: /projects/workflowdoc/src 
+    environment:
+        - RUN_MODE=docker
+        - MONGO_HOST=dids_mongo
+    ports:
+        3000:3000
+    depends_on:
+        - mongodb
+
+  mongodb:
+    image: mongo
+    volumes:
+        - /projects/data/db: /projects/data/db #makes sure any data is persisted on machine between container up/downs.

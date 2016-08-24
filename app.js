@@ -192,7 +192,7 @@ app.post('/login', function(req, res, next) {
 
 
 
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0",function(){
+server.listen(process.env.PORT || config.get('PORT'), process.env.IP || "0.0.0.0",function(){
    var port = server.address().port;
    logger.info('App listening on port %s', port);
 });

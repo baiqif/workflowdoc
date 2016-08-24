@@ -71,13 +71,14 @@ append content
 
 		.tab-content(style='margin-top: 10px;')
 			#metadata.tab-pane.fade(role='tabpanel')
+				.container
 					form#workflowinfoform.form-horizontal(action='/workflow',method='post',data-toggle="validator",role="form")
 						input#uri(name="uri", type='hidden')
 						.form-group.has-feedback
 							label.control-label.col-sm-2(for="title") Title
 							.col-sm-10
 								input#title.form-control(name="title", placeholder='Title', required='', autofocus='')
-								label#displayuri(for="title") URI: 
+								label#displayuri(for="title") URI:
 								.help-block.with-errors 
 									Title cannot be empty
 

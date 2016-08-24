@@ -1,6 +1,12 @@
 {
-  "name": "passport-google-oauth2-example",
-  "version": "0.0.0",
+  "name": "Workflow documenting",
+  "version": "0.1.0",
+  "description": "Workflow document system",
+  "author": "Qifeng Bai <qifeng.bai@csiro.au>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "express": "~4.2.0",
     "jade": ">= 0.0.0",
