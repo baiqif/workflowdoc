@@ -8,7 +8,7 @@ services:
   workflowdoc:
     image: node:4-onbuild
     volumes:
-        - /projects/workflowdoc/src: /projects/workflowdoc/src 
+        - /srv/workflowdoc/src: /projects/workflowdoc/src 
     environment:
         - RUN_MODE=docker
         - MONGO_HOST=dids_mongo
@@ -20,4 +20,4 @@ services:
   mongodb:
     image: mongo
     volumes:
-        - /projects/data/db: /projects/data/db #makes sure any data is persisted on machine between container up/downs.
+        - /OSM/MEL/LW_OZNOME/mongodb-data/: /projects/data/db #makes sure any data is persisted on machine between container up/downs.
