@@ -1,5 +1,5 @@
 {
-  "name": "Workflow documenting",
+  "name": "Workflow-documenting",
   "version": "0.1.0",
   "description": "Workflow document system",
   "author": "Qifeng Bai <qifeng.bai@csiro.au>",
@@ -23,6 +23,7 @@
     "mongoose":"4.5.9",
     "winston":"*",
     "passport-ldapauth":"~0.5.0",
-    "bootstrap-validator":"*"
+    "bootstrap-validator":"*",
+    "ldapjs":"*"
   }
 }

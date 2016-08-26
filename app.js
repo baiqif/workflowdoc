@@ -65,40 +65,65 @@ passport.use(new GoogleStrategy({
       // and return that user instead.
       var User= modelfactory.getModel("users");
       
-      var registered_user = new User({
-        userid:profile.email,
-        displayName : profile.displayName,
-        email : profile.email,
-        admin : false
-      });
+
       
       User.find({ userid:profile.email},function(err,users){
-        if (users.length==0)
-          registered_user.save(function(err,user){
-            if(err) throw err;
-            // console.log("new user "+user._id)  
-            return done(null, user);
-          });
-        // console.log("existing user "+users[0]._id)  
-        return done(null, users[0]);
+        if (users.length==0){
+              var registered_user = new User({
+                  userid:profile.email,
+                  displayName : profile.displayName,
+                  email : profile.email,
+                  admin : false
+               });
+              registered_user.save(function(err,user){
+                  if(err) throw err;
+                  return done(null, registered_user);
+              })
+        }else
+           return done(null, users[0]);
       });
 
     });
   }
 ));
 
+
+var OPTS = {
+  server: {
+    url: 'ldap://act.ldap.csiro.au',
+    bindDn: 'ou=People,DC=nexus,DC=csiro,DC=au',
+    bindCredentials: 'password',
+    searchBase: 'ou=People,DC=nexus,DC=csiro,DC=au',
+    searchFilter: '(uid={{username}})'
+  },
+  usernameField: "username",
+  passwordField: "password"
+};
+
+passport.use(new LdapStrategy(OPTS),
+  function(request, accessToken, refreshToken, profile, done) {
+    logger.debug(profile) 
+    return done(null, profile);
+  });
+
+app.post('/login', function(req, res, next) {
+  passport.authenticate('ldapauth', {session: false}, function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (!user) {
+      return res.send({ success : false, message : 'authentication failed' });
+    }
+    return res.send({ success : true, message : 'authentication succeeded' });
+  });
+});
+
+
+
 // configure Express
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-
-// sometimes, code sequence doese matter
-function errorHandler(err, req, res, next) {
-  logger.error(err)
-  res.status(500);
-  res.render('error', { error: err });
-}
-
-app.use(errorHandler);
 
 
 app.use( express.static(__dirname + '/public'));
@@ -122,10 +147,9 @@ app.use(function(req,res,next){
     next();
 });
 
-
-
-
 require('./routes')(app);
+
+app.use(errorHandler);
 
 
 
@@ -162,35 +186,20 @@ app.get('/oauth2callback', passport.authenticate('google'), function(req, res) {
 });
 
 
-var OPTS = {
-  server: {
-    url: 'ldap://nexus.csiro.au/People',
-    bindDn: 'ou=People,DC=nexus,DC=csiro,DC=au',
-    bindCredentials: 'password',
-    searchBase: 'ou=People,DC=nexus,DC=csiro,DC=au',
-    searchFilter: '(uid={{username}})'
-  },
-  usernameField: "username",
-  passwordField: "password"
-};
 
-passport.use(new LdapStrategy(OPTS));
 
-app.post('/login', function(req, res, next) {
-  passport.authenticate('ldapauth', {session: false}, function(err, user, info) {
-    if (err) {
-      return next(err); // will generate a 500 error
-    }
-    // Generate a JSON response reflecting authentication status
-    if (!user) {
-      return res.send({ success : false, message : 'authentication failed' });
-    }
-    return res.send({ success : true, message : 'authentication succeeded' });
-  });
+// sometimes, code sequence doese matter
+function errorHandler(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500);
+  res.render('error', { error: err });
+}
+
+app.get('*', function(req, res, next) {
+  res.render('error', { error: "OOPS. The page you are looking for does not exist!" });
 });
-
-
-
 
 server.listen(process.env.PORT || config.get('PORT'), process.env.IP || "0.0.0.0",function(){
    var port = server.address().port;

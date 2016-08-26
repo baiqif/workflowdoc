@@ -107,7 +107,7 @@ module.exports = function(app){
         });
     
     app.route('/workflow/:workflow_id')
-         .get(ensureAuthenticated,function(req, res){
+         .get(ensureAuthenticated,function(req, res,next){
              var Workflow= modelfactory.getModel("workflow");
              Workflow.find({ workflowid: req.params.workflow_id }, function(err, workflows) {
                 if (err) throw err;
@@ -128,7 +128,7 @@ module.exports = function(app){
                         return res.render('./error', { error: 'You dont have permissions to access this flow!' });
                 }
                 else 
-                    return res.render('./error',{error:"Workflow does not exist!"});
+                     return res.render('./error',{error:"The document you are looking for does not exist!"});
                 });
           })
           // DELETE METHOD NOT SUPPORTED BY BROWSER
@@ -150,6 +150,12 @@ module.exports = function(app){
                 });
          });
      })
+     
+     
+     app.route('/workflow/newresource/:workflow_id')
+        .get(ensureAuthenticated,function(req, res,next){
+            return res.render('./resource/new',workflow_id=req.params.workflow_id);
+        })
     
     
     app.get('/check_availability',function(req,res){
@@ -187,5 +193,6 @@ module.exports = function(app){
       }    
 
     }
+
 
 }

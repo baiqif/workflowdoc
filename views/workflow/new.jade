@@ -65,9 +65,15 @@ append content
 			li.active
 				a(data-toggle='tab', href='#workflow') Workflow
 			li
-				a(data-toggle='tab', href='#metadata') Infomation
-			li
-				a(data-toggle='tab', href='#resources') Resources
+				a(data-toggle='tab', href='#metadata')
+					i.glyphicon.glyphicon-edit 
+					|  Infomation
+			
+			if workflow
+				li
+					a(data-toggle='tab', href='#resources') 
+						i.glyphicon.glyphicon-list 
+						|  Resources
 
 		.tab-content(style='margin-top: 10px;')
 			#metadata.tab-pane.fade(role='tabpanel')
@@ -100,13 +106,19 @@ append content
 					.col-md-12
 						#myDiagramDiv(style='border: solid 1px gray; height: 620px')
 					.col-md-12
-						#myPaletteDiv(style='border: solid 1px gray; height: 180px;margin-top: 10px')
-			#resources.tab-pane.fade.in(role='tabpanel')
-				h3 Resources
+						#myPaletteDiv(style='border: solid 1px gray; height: 180px;margin-top: 10px;margin-bottom: 10px')
+			if workflow
+				#resources.tab-pane.fade.in(role='tabpanel')
+					.container(style='margin-bottom: 10px')
+						a.btn.btn-primary(href="/workflow/newresource/#{workflow.workflowid}")
+							i.glyphicon.glyphicon-plus 
+							|  Add new resource
+				
+				
 
 	block primary-actionbar
-		.col-md-12(style='margin-top: 10px')
-			.btn-toolbar
+		.container
+			
 				button#SaveBtn.btn.btn-success.pull-right Save
 				button#CancelBtn.btn.btn-primary.pull-right Cancel
 

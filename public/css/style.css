@@ -1,3 +1,19 @@
+.wrapper {
+    background-color: #FFF;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+    -moz-box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+    position: relative;
+    background: #ffffff url("../../../base/images/nav.png") 0 0 repeat-y;
+    margin-bottom: 20px;
+}
+
+
+
 /*
  * Specific styles of signin component
  */
@@ -25,6 +41,23 @@ body, html {
     max-width: 350px;
     padding: 40px 40px;
 }
+
+.btn-toolbar{
+   margin-top: 5px;
+   margin-bottom: 5px;
+   margin-left:5px;
+   margin-right:5px;
+}
+
+.main-header {
+    margin:5px,5px,5px,5px;
+    border-bottom: 1px solid #dddddd;
+    background-color: #f6f6f6;
+    -webkit-border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    border-radius: 0 3px 0 0;
+}
+
 
 /*
 .btn {

@@ -1,0 +1,43 @@
+extend ../layout
+
+block content
+    .container(style="margin-top:50px")
+        .wrapper
+            .main-header 
+                a.btn.btn-primary.pull-right(href='/workflow/#{workflow_id}')
+                        i.glyphicon.glyphicon-list
+                        |  All resources 
+                ul.nav.nav-tabs
+                  li.active
+                    a(href='#')
+                      i.icon-edit
+                      |  New resource
+            .tab-pane(style="margin-top:20px;margin-right:10px")
+                form#workflowinfoform.form-horizontal(action='#',method='post',data-toggle="validator",role="form")
+                    input#uri(name="uri", type='hidden')
+                    .form-group.has-feedback
+                        label.control-label.col-sm-2(for="file") File
+                        .col-sm-10
+                            .btn-toolbar
+                                a.btn.btn-primary(name="uploadfile")
+                                    span.glyphicon.glyphicon-cloud-upload 
+                                    |  Upload
+                                a.btn.btn-primary(name="linkfile") 
+                                    span.glyphicon.glyphicon-globe
+                                    |  Link
+                    .form-group.has-feedback
+                        label.control-label.col-sm-2(for="name") Name
+                        .col-sm-10
+                            input#name.form-control(name="name", placeholder='Name', required='', autofocus='')
+                    .form-group
+                        label.control-label.col-sm-2 Description
+                        .col-sm-10
+                           textarea#description.form-control(name="description",type='password', placeholder='Description')
+                    .form-group
+                        label.control-label.col-sm-2(for="format") Format
+                        .col-sm-10
+                            input#format.form-control(name="format", placeholder='Formats', autofocus='')
+    
+                    .btn-toolbar
+                        button.btn.btn-primary.pull-right(name='save',  type='submit') Add
+
