@@ -1,4 +1,4 @@
-version: '1'
+version: '2'
 
 volumes:
     hello:
@@ -9,7 +9,7 @@ services:
     build:
         dockerfile: Dockerfile
     volumes:
-        - /srv/workflowdoc/src: /projects/workflowdoc/src 
+        - /srv/workflowdoc/src:/projects/workflowdoc/src 
     environment:
         - RUN_MODE=docker
         - MONGO_HOST=mongo
@@ -23,4 +23,4 @@ services:
     expose:
          - 27017
     volumes:
-         - /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data: /data/db
+         - /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data:/data/db
