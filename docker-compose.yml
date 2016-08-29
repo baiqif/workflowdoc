@@ -20,5 +20,6 @@ services:
 
   mongodb:
     image: mongo
+    EXPOSE: 27017
     volumes:
-        - /OSM/MEL/LW_OZNOME/mongodb-data/: /projects/data/db #makes sure any data is persisted on machine between container up/downs.
+          /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data: /data/db #makes sure any data is persisted on machine between container up/downs.
