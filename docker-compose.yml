@@ -1,26 +1,18 @@
-version: '2'
-
-volumes:
-    hello:
-        driver: local
-
-services:
   workflowdoc:
     build:
-        dockerfile: Dockerfile
+         .     
     volumes:
-        - /srv/workflowdoc/src:/projects/workflowdoc/src 
-    environment:
+        - /srv/workflowdoc:/usr/src/app
+   environment:
         - RUN_MODE=docker
         - MONGO_HOST=mongo
     ports:
-        - 3000:3000
-    depends_on:
-        - mongodb
+        - "8080:8080"
 
   mongodb:
     image: mongo
-    expose:
-         - 27017
+    ports:
+        - "27017:27017"
     volumes:
          - /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data:/data/db
+    command: --smallfiles --rest --auth
