@@ -19,7 +19,7 @@ var nconf = module.exports = require('nconf');
 var path = require('path');
 var logger = require('./logs');
 
-// logger.info('Service mode is '+process.env.NODE_ENV?process.env.NODE_ENV+'-config.json':'config.json');
+logger.info('Service mode is '+'NODE_ENV' in process.env?process.env.NODE_ENV+'-config.json':'config.json');
 
 nconf
   // 1. Command-line arguments
@@ -43,7 +43,7 @@ nconf
     'SECRET'
   ])
   // 3. Config file
-  .file({ file: path.join(__dirname, 'config.json') })
+  .file({ file: path.join(__dirname, 'NODE_ENV' in process.env?process.env.NODE_ENV+'-config.json':'config.json') })
   // 4. Defaults
   .defaults({
     // Typically you will create a bucket with the same name as your project ID.
