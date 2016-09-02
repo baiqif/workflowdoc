@@ -19,7 +19,7 @@ append content
 									.small #{workflow.description}
 								td 
 									if workflow.creator 
-										#{workflow.creator.displayName}
+										| #{workflow.creator.displayName}
 								td #{workflow.updated_at}
 
 
@@ -38,7 +38,7 @@ append content
 block main_nav_header
 	ol.breadcrumb
 		li.breadcrumb-item.active
-			a(href='/workflow') My workflows
+			a(href='/workflow') My flows
 		li.breadcrumb-item
 			b 
 				a(href='/workflow/public').active Shared with me

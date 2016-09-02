@@ -17,8 +17,16 @@ module.exports = function(app){
     });
     
     app.get('/', function(req, res){
-      res.render('index', { user: req.user });
+         var Workflow= modelfactory.getModel("workflow");
+         Workflow
+            .find({is_public: true})
+            .populate('creator')
+            .exec(function (err, workflows) {
+              if (err) throw(err);
+              return res.render('index', {user: req.user, workflows: workflows });
+            });
     });
+
     app.get('/logout', function(req, res){
       req.logout();
       res.redirect('/');
@@ -40,7 +48,18 @@ module.exports = function(app){
 
     });
     
-    app.get('/workflow/shared',ensureAuthenticated,function(req, res){
+    app.get('/flow/public',function(req, res){
+        var Workflow= modelfactory.getModel("workflow");
+         Workflow
+            .find({is_public: true})
+            .populate('creator')
+            .exec(function (err, workflows) {
+              if (err) throw(err);
+              return res.render('./workflow/shared', { workflows: workflows });
+            });
+        });
+
+    app.get('/workflow/shared',function(req, res){
          var Workflow= modelfactory.getModel("workflow");
          Workflow
             .find({$and:[{is_public: true},{creator:{'$ne':req.user._id}}]})
@@ -107,30 +126,38 @@ module.exports = function(app){
         });
     
     app.route('/workflow/:workflow_id')
-         .get(ensureAuthenticated,function(req, res,next){
+         .get(function(req, res,next){
              var Workflow= modelfactory.getModel("workflow");
-             Workflow.find({ workflowid: req.params.workflow_id }, function(err, workflows) {
-                if (err) throw err;
-                if (workflows.length>0){
-                    if (workflows[0].creator == req.user._id){
+             Workflow
+                .find({ workflowid: req.params.workflow_id })
+                .populate('creator')
+                .exec(function (err, workflows) {
+                  if (err) throw(err);
+                  if (workflows.length>0){
+                    if (workflows[0].is_public){
                         workflows[0].is_readable = true;
-                        workflows[0].is_writable = true;
-                    }else if (workflows[0].is_public){
-                        workflows[0].is_readable = true;
-                        workflows[0].is_writable = false;
-                    }else{
-                        workflows[0].is_readable = false;
                         workflows[0].is_writable = false;
                     }
+                    
+                    if (req.user){
+                        if (workflows[0].creator._id.toString() == req.user._id){
+                            workflows[0].is_readable = true;
+                            workflows[0].is_writable = true;
+                       }
+                    }
+                    
+
                     if (workflows[0].is_readable)
                         return res.render('./workflow/read', { workflow: workflows[0] });
                     else
-                        return res.render('./error', { error: 'You dont have permissions to access this flow!' });
+                        return res.render('./error', { error: "You don't have permissions to access this flow!" });
                 }
                 else 
                      return res.render('./error',{error:"The document you are looking for does not exist!"});
                 });
-          })
+            })
+     
+
           // DELETE METHOD NOT SUPPORTED BY BROWSER
           .delete(ensureAuthenticated,function(req, res){
               var Workflow= modelfactory.getModel("workflow");

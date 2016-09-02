@@ -17,6 +17,9 @@
 // variables, and files.
 var nconf = module.exports = require('nconf');
 var path = require('path');
+var logger = require('./logs');
+
+// logger.info('Service mode is '+process.env.NODE_ENV?process.env.NODE_ENV+'-config.json':'config.json');
 
 nconf
   // 1. Command-line arguments
