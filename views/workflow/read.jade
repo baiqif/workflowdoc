@@ -19,7 +19,9 @@ append main_nav_header
 append content
         .col-md-2
             h3 #{workflow.title}
-            p #{workflow.creator.displayName}
+            if workflow.creator
+                p 
+                    | #{workflow.creator.displayName}
             p #{workflow.description}
             p 
                 if workflow.is_public
