@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var config = require('../../config');
 var urljoin = require('url-join');
+var user = require("./model-users");
 //var __ = require('underscore');
 var logger = require('../../logs'); 
 
