@@ -1,18 +1,16 @@
-  workflowdoc:
-    build:
+  workflowdoc2: 
+    build: 
          .     
-    volumes:
-        - /srv/workflowdoc:/usr/src/app
-   environment:
+    environment: 
         - RUN_MODE=docker
         - MONGO_HOST=mongo
-    ports:
-        - "8080:8080"
+    ports: 
+        - "9002:8080"
+    links:
+        - "mongodb"
 
-  mongodb:
+  mongodb: 
     image: mongo
-    ports:
-        - "27017:27017"
-    volumes:
+    volumes:  
          - /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data:/data/db
-    command: --smallfiles --rest --auth
+    command: --smallfiles --rest 
