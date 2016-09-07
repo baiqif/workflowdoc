@@ -24,8 +24,8 @@ block scripts
 		        
 		        if (title){
 		        	$('#workflowinfoform').submit(function(eventObj) {
-					   
-					    $(this).append("<input type='hidden' name='doc' value='"+workflowdoc+"'>");
+						$(this).append("<input type='hidden' id='doc' name='doc'>");
+					    $('#doc').val(workflowdoc)
 					    return true;
 					});
 		        	$('#workflowinfoform').trigger('submit');

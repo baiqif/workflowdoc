@@ -34,7 +34,8 @@ append scripts
 		        	// 	};
 		        	$('#workflowinfoform').submit(function(eventObj) {
 					    $(this).find("input#uri").val(uri);
-					    $(this).append("<input type='hidden' name='doc' value='"+workflowdoc+"'>");
+					    $(this).append("<input type='hidden' id='doc' name='doc'>");
+					    $('#doc').val(workflowdoc)
 					    return true;
 					});
 		        	$('#workflowinfoform').trigger('submit');
