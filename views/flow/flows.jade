@@ -3,9 +3,9 @@ extend ../layout
 
 append content
 	.container
-		if workflows.length
+		if flows.length
 			.content
-				a.btn.btn-success.pull-right(href='/workflow/new') Create
+				a.btn.btn-success.pull-right(href='/flow/new') Create
 				table.table.table-striped
 					thead
 						tr
@@ -13,20 +13,20 @@ append content
 							th Description
 							th Created
 					tbody
-						each workflow in workflows
+						each flow in flows
 							tr
 								td 
-									a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
-								td #{workflow.description}
-								td #{workflow.updated_at}
-			// each workflow in workflows
+									a(href='/flow/#{flow.flowid}') #{flow.title}
+								td #{flow.description}
+								td #{flow.updated_at}
+			// each flow in flows
 			// 	.col-sm-4
 			// 		.card.card-block
 			// 			h3.card-title 
-			// 				a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
+			// 				a(href='/flow/#{flow.flowid}') #{flow.title}
 			// 			p.card-text
-			// 				small #{workflow.description}
-			// 				small #{workflow.updated_at}
+			// 				small #{flow.description}
+			// 				small #{flow.updated_at}
 
 		else
 			.row
@@ -34,17 +34,17 @@ append content
 					.card
 						.card-block(style='margin-left: 10px;margin-right: 10px;margin-bottom: 10px;')
 							img.card-img-top.center-block(src='/images/glass-warning-sign.png', alt='Warning',width='200', height='200')
-							h3.card-title OOPS, seems you do not have any workflows!
+							h3.card-title OOPS, seems you do not have any flows!
 							p
 							.card-text 
-								Do you want to create a new workflow?  
-								a.btn.btn-success(href='/workflow/new') Create
+								Do you want to create a new flow?  
+								a.btn.btn-success(href='/flow/new') Create
 
 append main_nav_header
 	ol.breadcrumb
 		li.breadcrumb-item.active
 			b
-				a(href='/workflow') My flows
+				a(href='/flow') My flows
 		li.breadcrumb-item
-			a(href='/workflow/shared') Shared with me
+			a(href='/flow/shared') Shared with me
 

@@ -1,7 +1,7 @@
 {
-  "name": "Workflow-documenting",
+  "name": "Flow-documenting",
   "version": "0.1.0",
-  "description": "Workflow document system",
+  "description": "Flow document system",
   "author": "Qifeng Bai <qifeng.bai@csiro.au>",
   "main": "app.js",
   "scripts": {

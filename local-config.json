@@ -2,7 +2,7 @@
     "DATA_BACKEND":"mongodb",
     "MEMCACHE_URL": "127.0.0.1:11211",
     "MONGO_URL":"mongodb://mongodb:27017",
-    "MONGO_DATABASE":"workflowdoc",
+    "MONGO_DATABASE":"flowdoc",
     "MYSQL_USER":"",
     "MYSQL_PASSWORD":"",
     "MYSQL_HOST":"",

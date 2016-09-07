@@ -7,38 +7,38 @@ append scripts
 			initGoDiagram();
 			initGoPalette();
 			
-			$('#workflowinfoform input#title').data('remote',"/check_availability");
-			$('#workflowinfoform input#title').data('remote-error',"ERROR:URI has been used!");
+			$('#flowinfoform input#title').data('remote',"/check_availability");
+			$('#flowinfoform input#title').data('remote-error',"ERROR:URI has been used!");
 
-			$("form#workflowinfoform input#title").on("change keyup paste click",function() {
-				var title = $('#workflowinfoform input#title').val().trim();
+			$("form#flowinfoform input#title").on("change keyup paste click",function() {
+				var title = $('#flowinfoform input#title').val().trim();
 				var uri = title.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
 				$('label#displayuri').text("URI:  "+ uri);
 				//fire event to trigger data-remote validation
-				//$('#workflowinfoform input#uri').trigger( "change" );
+				//$('#flowinfoform input#uri').trigger( "change" );
 				
 			});
 			
 			$("#SaveBtn").click(function(){
-		        var workflowdoc = myDiagram.model.toJson();
-		        var title = $('#workflowinfoform input#title').val().trim();
-		        var description = $('#workflowinfoform #description').val()
+		        var flowdoc = myDiagram.model.toJson();
+		        var title = $('#flowinfoform input#title').val().trim();
+		        var description = $('#flowinfoform #description').val()
 		        
 		        if (title){
 		        	var uri = title.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
 		        	// var data ={
 		        	// 	title:title,
 		        	// 	description:description,
-		        	// 	workflowdoc: workflowdoc,
+		        	// 	flowdoc: flowdoc,
 		        	// 	creator:creator
 		        	// 	};
-		        	$('#workflowinfoform').submit(function(eventObj) {
+		        	$('#flowinfoform').submit(function(eventObj) {
 					    $(this).find("input#uri").val(uri);
 					    $(this).append("<input type='hidden' id='doc' name='doc'>");
-					    $('#doc').val(workflowdoc)
+					    $('#doc').val(flowdoc)
 					    return true;
 					});
-		        	$('#workflowinfoform').trigger('submit');
+		        	$('#flowinfoform').trigger('submit');
 		        }
 		        else{
 		        	$('.nav-tabs a[href="#metadata"]').tab('show');
@@ -56,7 +56,7 @@ block footer
 block main_nav_header
 		ol.breadcrumb
 			li.breadcrumb-item
-				a(href='/workflow') Flows
+				a(href='/flow') Flows
 			li.breadcrumb-item.active
 				a(href='#') New
 
@@ -64,13 +64,13 @@ append content
 	#sample
 		ul.nav.nav-tabs
 			li.active
-				a(data-toggle='tab', href='#workflow') Flow
+				a(data-toggle='tab', href='#flow') Flow
 			li
 				a(data-toggle='tab', href='#metadata')
 					i.glyphicon.glyphicon-edit 
 					|  Infomation
 			
-			if workflow
+			if flow
 				li
 					a(data-toggle='tab', href='#resources') 
 						i.glyphicon.glyphicon-list 
@@ -79,7 +79,7 @@ append content
 		.tab-content(style='margin-top: 10px;')
 			#metadata.tab-pane.fade(role='tabpanel')
 				.container
-					form#workflowinfoform.form-horizontal(action='/workflow',method='post',data-toggle="validator",role="form")
+					form#flowinfoform.form-horizontal(action='/flow',method='post',data-toggle="validator",role="form")
 						input#uri(name="uri", type='hidden')
 						.form-group.has-feedback
 							label.control-label.col-sm-2(for="title") Title
@@ -103,15 +103,15 @@ append content
 							.col-sm-10
 								input#keywords.form-control(name="keywords", placeholder='Keywords', autofocus='')
 								
-			#workflow.tab-pane.fade.in.active(role='tabpanel')
+			#flow.tab-pane.fade.in.active(role='tabpanel')
 					.col-md-12
 						#myDiagramDiv(style='border: solid 1px gray; height: 620px')
 					.col-md-12
 						#myPaletteDiv(style='border: solid 1px gray; height: 180px;margin-top: 10px;margin-bottom: 10px')
-			if workflow
+			if flow
 				#resources.tab-pane.fade.in(role='tabpanel')
 					.container(style='margin-bottom: 10px')
-						a.btn.btn-primary(href="/workflow/newresource/#{workflow.workflowid}")
+						a.btn.btn-primary(href="/flow/newresource/#{flow.flowid}")
 							i.glyphicon.glyphicon-plus 
 							|  Add new resource
 				

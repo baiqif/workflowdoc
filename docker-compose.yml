@@ -1,4 +1,4 @@
-  workflowdoc2: 
+  flowdoc2: 
     build: 
          .     
     environment: 
@@ -12,5 +12,5 @@
   mongodb: 
     image: mongo
     volumes:  
-         - /OSM/MEL/LW_OZNOME/workflowdoc/mongodb-data:/data/db
+         - /OSM/MEL/LW_OZNOME/flowdoc/mongodb-data:/data/db
     command: --smallfiles --rest 

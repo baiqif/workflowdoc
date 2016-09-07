@@ -6,39 +6,39 @@ append scripts
     script(type='text/javascript').
         $(document).ready(function(){
              initGoDiagram();
-             myDiagram.model = go.Model.fromJson(!{JSON.stringify(workflow.doc)});
+             myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
             })
 
 append main_nav_header
     ol.breadcrumb
       li.breadcrumb-item
-        a(href='/workflow') Flow
+        a(href='/flow') Flow
       li.breadcrumb-item.active
-        a(href='#') #{workflow.title}
+        a(href='#') #{flow.title}
 
 append content
         .col-md-2
-            h3 #{workflow.title}
-            if workflow.creator
+            h3 #{flow.title}
+            if flow.creator
                 p 
-                    | #{workflow.creator.displayName}
-            p #{workflow.description}
+                    | #{flow.creator.displayName}
+            p #{flow.description}
             p 
-                if workflow.is_public
+                if flow.is_public
                     | Public
                 else
                     | Private
-            p #{workflow.keywords}
+            p #{flow.keywords}
             
             p Last updated: 
-                small #{workflow.updated_at}
+                small #{flow.updated_at}
             hr
             block secondary-actionbar
-                if workflow.is_writable
+                if flow.is_writable
                     .btn-toolbar
                         button#DeleteBtn.btn.btn-danger.pull-left(data-toggle='modal', data-target='#confirm-delete') Delete
                         button#CancelBtn.btn.btn-primary.pull-right Cancel
-                        a.btn.btn-success.pull-right(href='/workflow/edit/#{workflow.workflowid}') Edit
+                        a.btn.btn-success.pull-right(href='/flow/edit/#{flow.flowid}') Edit
                     
                 #confirm-delete.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
                     .modal-dialog
@@ -47,12 +47,12 @@ append content
                                 button.close(type='button', data-dismiss='modal', aria-hidden='true')
                                 myModalLabel.modal-title Confirm Delete
                             .modal-body
-                                p You are about to delete this workflow, this procedure is irreversible.
+                                p You are about to delete this flow, this procedure is irreversible.
                                 p Do you want to proceed?
                             
                             .modal-footer
                                 button.btn.btn-default(type='button', data-dismiss='modal') Cancel
-                                a.btn.btn-danger(href='/workflow/delete/#{workflow.workflowid}') Delete
+                                a.btn.btn-danger(href='/flow/delete/#{flow.flowid}') Delete
             
             
         .col-md-10

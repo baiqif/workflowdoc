@@ -5,30 +5,30 @@ block scripts
 		$(document).ready(function(){
 			initGoDiagram();
 			initGoPalette();
-			myDiagram.model = go.Model.fromJson(!{JSON.stringify(workflow.doc)});
-			$('#workflowinfoform input#uri').val("#{workflow.workflowid}")
-			$('#workflowinfoform input#title').val("#{workflow.title}")
-			$('#workflowinfoform textarea#description').val("#{workflow.description}")
-			$('#workflowinfoform input#keywords').val("#{workflow.keywords}")
-			$('#workflowinfoform #is_public').prop('checked', #{workflow.is_public})
-			$('label#displayuri').text("URI:  #{workflow.workflowid}");
+			myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
+			$('#flowinfoform input#uri').val("#{flow.flowid}")
+			$('#flowinfoform input#title').val("#{flow.title}")
+			$('#flowinfoform textarea#description').val("#{flow.description}")
+			$('#flowinfoform input#keywords').val("#{flow.keywords}")
+			$('#flowinfoform #is_public').prop('checked', #{flow.is_public})
+			$('label#displayuri').text("URI:  #{flow.flowid}");
 			
-			$("form#workflowinfoform").change(function() {
+			$("form#flowinfoform").change(function() {
 				$('button#SaveBtn').removeAttr('disabled');
 			});
 			
 			$("#SaveBtn").click(function(){
-		        var workflowdoc = myDiagram.model.toJson();
-		        var title = $('#workflowinfoform input#title').val().trim();
-		        var description = $('#workflowinfoform #description').val()
+		        var flowdoc = myDiagram.model.toJson();
+		        var title = $('#flowinfoform input#title').val().trim();
+		        var description = $('#flowinfoform #description').val()
 		        
 		        if (title){
-		        	$('#workflowinfoform').submit(function(eventObj) {
+		        	$('#flowinfoform').submit(function(eventObj) {
 						$(this).append("<input type='hidden' id='doc' name='doc'>");
-					    $('#doc').val(workflowdoc)
+					    $('#doc').val(flowdoc)
 					    return true;
 					});
-		        	$('#workflowinfoform').trigger('submit');
+		        	$('#flowinfoform').trigger('submit');
 		        }
 		        else{
 		        	$('.nav-tabs a[href="#metadata"]').tab('show');
@@ -44,9 +44,9 @@ block main_nav_header
 	div
 		ol.breadcrumb
 			li.breadcrumb-item
-				a(href='/workflow') Flow
+				a(href='/flow') Flow
 			li.breadcrumb-item
-				a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
+				a(href='/flow/#{flow.flowid}') #{flow.title}
 			li.breadcrumb-item.active
 				a(href='#') Edit		
 
@@ -64,9 +64,9 @@ block primary-actionbar
 					button.close(type='button', data-dismiss='modal', aria-hidden='true')
 					myModalLabel.modal-title Confirm Delete
 				.modal-body
-					p You are about to delete this workflow, this procedure is irreversible.
+					p You are about to delete this flow, this procedure is irreversible.
 					p Do you want to proceed?
 	
 				.modal-footer
 					button.btn.btn-default(type='button', data-dismiss='modal') Cancel
-					a.btn.btn-danger(href='/workflow/delete/#{workflow.workflowid}') Delete
+					a.btn.btn-danger(href='/flow/delete/#{flow.flowid}') Delete

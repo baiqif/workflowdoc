@@ -8,10 +8,10 @@ var user = require("./model-users");
 //var __ = require('underscore');
 var logger = require('../../logs'); 
 
-var workflowconn = mongoose.createConnection(urljoin(config.get('MONGO_URL'),config.get('MONGO_DATABASE')));
+var flowconn = mongoose.createConnection(urljoin(config.get('MONGO_URL'),config.get('MONGO_DATABASE')));
 
-var workflowSchema = new Schema({
-  workflowid: { type: String, required: true, unique: true },
+var flowSchema = new Schema({
+  flowid: { type: String, required: true, unique: true },
   title: String,
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   description:String,
@@ -28,7 +28,7 @@ var workflowSchema = new Schema({
   updated_at: Date
 });
 
-workflowSchema.pre('save', function(next) {
+flowSchema.pre('save', function(next) {
   // get the current date
   var currentDate = new Date();
   
@@ -61,5 +61,5 @@ workflowSchema.pre('save', function(next) {
 // }
 
 
-var Workflow = workflowconn.model('Workflow', workflowSchema);
-module.exports = Workflow;
+var Flow = flowconn.model('Flow', flowSchema);
+module.exports = Flow;

@@ -4,7 +4,7 @@ block content
     .container(style="margin-top:50px")
         .wrapper
             .main-header 
-                a.btn.btn-primary.pull-right(href='/workflow/#{workflow_id}')
+                a.btn.btn-primary.pull-right(href='/flow/#{flow_id}')
                         i.glyphicon.glyphicon-list
                         |  All resources 
                 ul.nav.nav-tabs
@@ -13,7 +13,7 @@ block content
                       i.icon-edit
                       |  New resource
             .tab-pane(style="margin-top:20px;margin-right:10px")
-                form#workflowinfoform.form-horizontal(action='#',method='post',data-toggle="validator",role="form")
+                form#flowinfoform.form-horizontal(action='#',method='post',data-toggle="validator",role="form")
                     input#uri(name="uri", type='hidden')
                     .form-group.has-feedback
                         label.control-label.col-sm-2(for="file") File

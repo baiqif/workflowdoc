@@ -3,7 +3,7 @@ extend ../layout
 
 append content
 	.container
-		if workflows.length
+		if flows.length
 			.content
 				table.table.table-striped
 					thead
@@ -12,15 +12,15 @@ append content
 							th Created by
 							th Created at
 					tbody
-						each workflow in workflows
+						each flow in flows
 							tr
 								td 
-									a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
-									.small #{workflow.description}
+									a(href='/flow/#{flow.flowid}') #{flow.title}
+									.small #{flow.description}
 								td 
-									if workflow.creator 
-										| #{workflow.creator.displayName}
-								td #{workflow.updated_at}
+									if flow.creator 
+										| #{flow.creator.displayName}
+								td #{flow.updated_at}
 
 
 		else
@@ -29,17 +29,17 @@ append content
 					.card
 						.card-block(style='margin-left: 10px;margin-right: 10px;margin-bottom: 10px;')
 							img.card-img-top.center-block(src='/images/glass-warning-sign.png', alt='Warning',width='200', height='200')
-							h3.card-title OOPS, seems you do not have any workflows!
+							h3.card-title OOPS, seems you do not have any flows!
 							p
 							.card-text 
-								Do you want to create a new workflow?  
-								a.btn.btn-success(href='/workflow/new') Create
+								Do you want to create a new flow?  
+								a.btn.btn-success(href='/flow/new') Create
 
 block main_nav_header
 	ol.breadcrumb
 		li.breadcrumb-item.active
-			a(href='/workflow') My flows
+			a(href='/flow') My flows
 		li.breadcrumb-item
 			b 
-				a(href='/workflow/public').active Shared with me
+				a(href='/flow/public').active Shared with me
 

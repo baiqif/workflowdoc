@@ -177,7 +177,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: [
 
 app.get('/oauth2callback', passport.authenticate('google'), function(req, res) {
     if (req.isAuthenticated()){
-      res.redirect(req.session.returnTo || '/workflow');
+      res.redirect(req.session.returnTo || '/flow');
        delete req.session.returnTo;
     }else{
       res.redirect('/signin')

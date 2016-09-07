@@ -14,14 +14,14 @@ block content
 
 	.container
 		.row
-			each workflow in workflows
+			each flow in flows
 				.col-md-4
 					.wrapper
 						h4 
-							a(href='/workflow/#{workflow.workflowid}') #{workflow.title}
+							a(href='/flow/#{flow.flowid}') #{flow.title}
 						p.small 
-							| #{workflow.description}
-						if workflow.creator 
-							p #{workflow.creator.displayName}
-						p #{workflow.updated_at}
+							| #{flow.description}
+						if flow.creator 
+							p #{flow.creator.displayName}
+						p #{flow.updated_at}
 
