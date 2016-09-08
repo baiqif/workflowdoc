@@ -69,7 +69,10 @@ html(lang="en")
 						nav
 							ul.nav.navbar-nav.navbar-left
 								li
-									a(href='/') Flow App (Alpha)
+									a(href='/') Flow App (Alpha)									
+								if user
+									li
+										a(href='/flow') My Flows
 
 							form.navbar-form.navbar-right
 								input.form-control(type='text', placeholder='Search...')

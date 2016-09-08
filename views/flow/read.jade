@@ -6,7 +6,11 @@ append scripts
     script(type='text/javascript').
         $(document).ready(function(){
              initGoDiagram();
-             myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
+             try{
+                myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
+             }catch(err){
+                console.log(err);
+             }
             })
 
 append main_nav_header

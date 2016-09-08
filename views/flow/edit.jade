@@ -5,7 +5,12 @@ block scripts
 		$(document).ready(function(){
 			initGoDiagram();
 			initGoPalette();
-			myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
+			try{
+				myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
+			}catch(err){
+				console.log(err)
+			}
+				
 			$('#flowinfoform input#uri').val("#{flow.flowid}")
 			$('#flowinfoform input#title').val("#{flow.title}")
 			$('#flowinfoform textarea#description').val("#{flow.description}")

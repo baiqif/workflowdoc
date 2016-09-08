@@ -8,7 +8,7 @@
     -moz-box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
     box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
     position: relative;
-    background: #ffffff url("../../../base/images/nav.png") 0 0 repeat-y;
+    /*background: #ffffff url("../../../base/images/nav.png") 0 0 repeat-y;*/
     margin-bottom: 20px;
 }
 
