@@ -8,11 +8,17 @@ function initGoDiagram(){
       $(go.Diagram, "myDiagramDiv",  // must name or refer to the DIV HTML element
         {
           initialContentAlignment: go.Spot.Center,
+          allowZoom: true,
+          "grid.visible": true,
+          "clickCreatingTool.archetypeNodeData": { text: "Node" },
+          "commandHandler.copiesTree": true,  // for the copy command
+          "commandHandler.deletesTree": true, // for the delete command
           allowDrop: true,  // must be true to accept drops from the Palette
           "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
           "LinkRelinked": showLinkLabel,
           "animationManager.duration": 800, // slightly longer than default (600ms) animation
-          "undoManager.isEnabled": true  // enable undo & redo
+          "undoManager.isEnabled": true , // enable undo & redo
+          "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom
         });
 
     // when the document is modified, add a "*" to the title and enable the "Save" button
@@ -95,6 +101,8 @@ function initGoDiagram(){
         makePort("R", go.Spot.Right, true, true),
         makePort("B", go.Spot.Bottom, true, false)
       ));
+    
+    
 
     myDiagram.nodeTemplateMap.add("Start",
       $(go.Node, "Spot", nodeStyle(),
@@ -129,7 +137,7 @@ function initGoDiagram(){
     myDiagram.nodeTemplateMap.add("Comment",
       $(go.Node, "Auto", nodeStyle(),
         $(go.Shape, "File",
-          { fill: "#EFFAB4", stroke: null }),
+          { fill: "transparent", stroke: null }),
         $(go.TextBlock,
           {
             margin: 5,
@@ -140,9 +148,35 @@ function initGoDiagram(){
             font: "bold 12pt Helvetica, Arial, sans-serif",
             stroke: '#454545'
           },
-          new go.Binding("text").makeTwoWay())
+          new go.Binding("text").makeTwoWay()),
+          makePort("T", go.Spot.Top, false, true),
+          makePort("L", go.Spot.Left, true, true),
+          makePort("R", go.Spot.Right, true, true),
+          makePort("B", go.Spot.Bottom, true, false)
         // no ports, because no links are allowed to connect with a comment
       ));
+    
+    myDiagram.nodeTemplateMap.add("Model",
+    	      $(go.Node, "Auto", nodeStyle(),
+    	        $(go.Shape, "File",
+    	          { fill: "GoldenRod", stroke: null }),
+    	        $(go.TextBlock,
+    	          {
+    	            margin: 5,
+    	            maxSize: new go.Size(200, NaN),
+    	            wrap: go.TextBlock.WrapFit,
+    	            textAlign: "center",
+    	            editable: true,
+    	            font: "bold 12pt Helvetica, Arial, sans-serif",
+    	            stroke: '#454545'
+    	          },
+    	          new go.Binding("text").makeTwoWay()),
+    	          makePort("T", go.Spot.Top, false, true),
+    	          makePort("L", go.Spot.Left, true, true),
+    	          makePort("R", go.Spot.Right, true, true),
+    	          makePort("B", go.Spot.Bottom, true, false)
+    	        // no ports, because no links are allowed to connect with a comment
+    	      ));
 
 
     // replace the default Link template in the linkTemplateMap
@@ -232,21 +266,21 @@ function initGoPalette(){
                 { toArrow: "Standard", stroke: null })
             ),
           model: new go.GraphLinksModel([  // specify the contents of the Palette
-            { text: "Start", figure: "Circle", fill: "#00AD5F" },
+            {category: "Start", text: "Start", figure: "Circle", fill: "#00AD5F" },
             { text: "Activity/Step" },
             { text: "Actor", figure: "Parallelogram2", fill: "MediumOrchid" },
             { text: "Decision", figure: "Diamond", fill: "lightskyblue" },
-      			{ text: "Model", figure: "TriangleRight", fill: "GoldenRod" },
-      			{ text: "App/Code/Script", figure: "RoundedRectangle", fill: "DodgerBlue" },
-      			{ text: "Product", figure: "Cube1", fill: "white" },
-      			{ text: "Doc", figure: "File", fill: "lightgray" },
-      			{ text: "Data", figure: "File", fill: "white" },
-      			{ text: "DB", figure: "Database", fill: "lightgray" },
-      			{ text: "WS", figure: "Circle", fill: "DodgerBlue" },
-      			{ text: "-    -", figure: "Resistor", fill: "white" },
-      			{ text: "End", figure: "Circle", fill: "#CE0620" },			
-                  { text: "Comment", figure: "RoundedRectangle", fill: "lightyellow" }
-                ], [
+  			{ category: "Model",text: "Model", figure: "TriangleRight", fill: "GoldenRod" },
+  			{ text: "App/Code/Script", figure: "RoundedRectangle", fill: "DodgerBlue" },
+  			{ text: "Product", figure: "Cube1", fill: "white" },
+  			{ text: "Doc", figure: "File", fill: "lightgray" },
+  			{ text: "Data", figure: "File", fill: "white" },
+  			{ text: "DB", figure: "Database", fill: "lightgray" },
+  			{ text: "WS", figure: "Circle", fill: "DodgerBlue" },
+  			{ text: "-    -", figure: "Resistor", fill: "white" },
+  			{ category: "End",text: "End", figure: "Circle", fill: "#CE0620" },			
+            { category: "Comment",text: "Comment",fill:"transparent" }
+           ], [
             // the Palette also has a disconnected Link, which the user can drag-and-drop
             { points: new go.List(go.Point).addAll([new go.Point(0, 0), new go.Point(30, 0), new go.Point(30, 40), new go.Point(60, 40)]), dash: [3,2] }
           ])
