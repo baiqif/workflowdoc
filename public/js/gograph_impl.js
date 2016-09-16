@@ -156,6 +156,10 @@ function initGoDiagram(){
         // no ports, because no links are allowed to connect with a comment
       ));
     
+    
+
+    
+    
     myDiagram.nodeTemplateMap.add("Model",
     	      $(go.Node, "Auto", nodeStyle(),
     	        $(go.Shape, "File",
@@ -178,6 +182,50 @@ function initGoDiagram(){
     	        // no ports, because no links are allowed to connect with a comment
     	      ));
 
+    myDiagram.nodeTemplateMap.add('Action',
+        $(go.Node, "Auto",
+          // the outer shape for the node, surrounding the Table
+          $(go.Shape, "Rectangle",
+            { stroke: null, strokeWidth: 0 },
+            /* reddish if highlighted, blue otherwise */
+            new go.Binding("fill", "isHighlighted", function(h) { return h ? "#F44336" : "#F44336"; }).ofObject()),
+          // a table to contain the different parts of the node
+          $(go.Panel, "Table",
+            { margin: 6, maxSize: new go.Size(200, NaN) },
+            // the two TextBlocks in column 0 both stretch in width
+            // but align on the left side
+            $(go.RowColumnDefinition,
+              {
+                column: 0,
+                stretch: go.GraphObject.Horizontal,
+                alignment: go.Spot.Left
+              }),
+            // the name
+            $(go.TextBlock,
+              {
+                row: 0, column: 0,
+                maxSize: new go.Size(160, NaN), margin: 2,
+                font: '500 16px Roboto, sans-serif',
+                editable: true,
+                alignment: go.Spot.Top
+              },
+              new go.Binding("text", "name")),
+
+            // the additional textual information
+            $(go.TextBlock,
+              {
+                row: 1, column: 0, columnSpan: 2,
+                font: "12px Roboto, sans-serif",
+                editable: true,
+              },
+              new go.Binding("text", "description"))
+          ),  // end Table Panel
+          makePort("T", go.Spot.Top, false, true),
+    	          makePort("L", go.Spot.Left, true, true),
+    	          makePort("R", go.Spot.Right, true, true),
+    	          makePort("B", go.Spot.Bottom, true, false)
+        )
+        ); 
 
     // replace the default Link template in the linkTemplateMap
     myDiagram.linkTemplate =
@@ -277,15 +325,20 @@ function initGoPalette(){
   			{ text: "Data", figure: "File", fill: "white" },
   			{ text: "DB", figure: "Database", fill: "lightgray" },
   			{ text: "WS", figure: "Circle", fill: "DodgerBlue" },
-  			{ text: "-    -", figure: "Resistor", fill: "white" },
+//  			{ text: "-    -", figure: "Resistor", fill: "white" },
   			{ category: "End",text: "End", figure: "Circle", fill: "#CE0620" },			
-            { category: "Comment",text: "Comment",fill:"transparent" }
+            { category: "Comment",text: "Comment",fill:"transparent" },
+            { category: "Action",name: "Action",description:"This is an action",fill:"transparent" }
            ], [
             // the Palette also has a disconnected Link, which the user can drag-and-drop
-            { points: new go.List(go.Point).addAll([new go.Point(0, 0), new go.Point(30, 0), new go.Point(30, 40), new go.Point(60, 40)]), dash: [3,2] }
+//            { points: new go.List(go.Point).addAll([new go.Point(0, 0), new go.Point(30, 0), new go.Point(30, 40), new go.Point(60, 40)]), dash: [3,2] }
           ])
         });
 };
+
+
+
+    
 
 
   // Make all ports on a node visible when the mouse is over the node

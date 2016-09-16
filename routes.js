@@ -12,9 +12,7 @@ module.exports = function(app){
     //              saveUninitialized: true,
     //              resave: true}));
     
-    app.get('/signin', function(req, res){
-      res.render('signin', { isSigninForm: true });
-    });
+
     
     app.get('/', function(req, res){
          var Flow= modelfactory.getModel("flow");

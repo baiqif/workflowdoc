@@ -106,18 +106,23 @@ passport.use(new LdapStrategy(OPTS),
     return done(null, profile);
   });
 
-app.post('/login', function(req, res, next) {
-  passport.authenticate('ldapauth', {session: false}, function(err, user, info) {
-    if (err) {
-      return next(err); // will generate a 500 error
-    }
-    // Generate a JSON response reflecting authentication status
-    if (!user) {
-      return res.send({ success : false, message : 'authentication failed' });
-    }
-    return res.send({ success : true, message : 'authentication succeeded' });
-  });
-});
+app.route('/signin')
+	.get(function(req, res){
+		res.render('signin', { isSigninForm: true });
+		})
+
+     .post(function(req, res, next) {
+		  passport.authenticate('ldapauth', {session: false}, function(err, user, info) {
+		    if (err) {
+		      return next(err); // will generate a 500 error
+		    }
+		    // Generate a JSON response reflecting authentication status
+		    if (!user) {
+		      return res.send({ success : false, message : 'authentication failed' });
+		    }
+		    return res.send({ success : true, message : 'authentication succeeded' });
+		  });
+		});
 
 
 

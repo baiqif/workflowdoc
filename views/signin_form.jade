@@ -1,7 +1,7 @@
 .card.card-container
 	img#profile-img.profile-img-card(src='//ssl.gstatic.com/accounts/ui/avatar_2x.png')
 	p#profile-name.profile-name-card
-	form.form-signin(action='/login',method='post')
+	form.form-signin(action='/signin',method='post')
 		span#reauth-email.reauth-email
 		input.form-control(name="username",type='email', placeholder='CSIRO Email', required='', autofocus='')
 		input.form-control(name="password",type='password', placeholder='Password', required='')
