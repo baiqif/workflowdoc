@@ -366,3 +366,16 @@ function initGoPalette(){
 	//      obj.replaceChild(svg, obj.children[0]);
 	//    }
   }
+  
+  function makeImage() {
+	    var img = myDiagram.makeImage({
+	        scale: 1
+	      });
+	    //svg.style.border = "1px solid black";
+	    return img;
+		//    obj = document.getElementById("SVGArea");
+		//    obj.appendChild(svg);
+		//    if (obj.children.length > 0) {
+		//      obj.replaceChild(svg, obj.children[0]);
+		//    }
+	  }

@@ -13,10 +13,10 @@ append scripts
              };
              
              $('button#ExportBtn').click(function(){
-                 var svg = makeSVG();
+                 var img = makeImage();
                  newTab = window.open();
                  div = document.createElement("div");
-                 div.appendChild(svg);
+                 div.appendChild(img);
                  newTab.document.body.innerHTML = div.innerHTML;
              })  
         })
