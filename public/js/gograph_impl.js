@@ -179,11 +179,10 @@ function initGoDiagram(){
     	          makePort("L", go.Spot.Left, true, true),
     	          makePort("R", go.Spot.Right, true, true),
     	          makePort("B", go.Spot.Bottom, true, false)
-    	        // no ports, because no links are allowed to connect with a comment
     	      ));
 
     myDiagram.nodeTemplateMap.add('Action',
-        $(go.Node, "Auto",
+        $(go.Node, "Auto",nodeStyle(),
           // the outer shape for the node, surrounding the Table
           $(go.Shape, "Rectangle",
             { stroke: null, strokeWidth: 0 },
@@ -191,7 +190,7 @@ function initGoDiagram(){
             new go.Binding("fill", "isHighlighted", function(h) { return h ? "#F44336" : "#F44336"; }).ofObject()),
           // a table to contain the different parts of the node
           $(go.Panel, "Table",
-            { margin: 6, maxSize: new go.Size(200, NaN) },
+            { margin: 6, maxSize: new go.Size(150, NaN) },
             // the two TextBlocks in column 0 both stretch in width
             // but align on the left side
             $(go.RowColumnDefinition,
@@ -204,8 +203,8 @@ function initGoDiagram(){
             $(go.TextBlock,
               {
                 row: 0, column: 0,
-                maxSize: new go.Size(160, NaN), margin: 2,
-                font: '500 16px Roboto, sans-serif',
+                maxSize: new go.Size(150, NaN), margin: 2,
+                font: '200 16px Roboto, sans-serif',
                 editable: true,
                 alignment: go.Spot.Top
               },
@@ -221,9 +220,9 @@ function initGoDiagram(){
               new go.Binding("text", "description"))
           ),  // end Table Panel
           makePort("T", go.Spot.Top, false, true),
-    	          makePort("L", go.Spot.Left, true, true),
-    	          makePort("R", go.Spot.Right, true, true),
-    	          makePort("B", go.Spot.Bottom, true, false)
+          makePort("L", go.Spot.Left, true, true),
+          makePort("R", go.Spot.Right, true, true),
+          makePort("B", go.Spot.Bottom, true, false)
         )
         ); 
 
@@ -357,12 +356,13 @@ function initGoPalette(){
   // add an SVG rendering of the diagram at the end of this page
   function makeSVG() {
     var svg = myDiagram.makeSvg({
-        scale: 0.5
+        scale: 1
       });
-    svg.style.border = "1px solid black";
-    obj = document.getElementById("SVGArea");
-    obj.appendChild(svg);
-    if (obj.children.length > 0) {
-      obj.replaceChild(svg, obj.children[0]);
-    }
+    //svg.style.border = "1px solid black";
+    return svg;
+	//    obj = document.getElementById("SVGArea");
+	//    obj.appendChild(svg);
+	//    if (obj.children.length > 0) {
+	//      obj.replaceChild(svg, obj.children[0]);
+	//    }
   }

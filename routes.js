@@ -4,6 +4,7 @@ var config = require('./config');
 var modelfactory = require('./models/model-factory');
 var session = require( 'express-session' )
 var logger = require('./logs'); 
+var uuidvalidate = require('uuid-validate');
 
 module.exports = function(app){
     
@@ -68,7 +69,7 @@ module.exports = function(app){
             });
         });
     
-    
+
     app.route('/flow')
          .get(ensureAuthenticated,function(req, res){
              var Flow= modelfactory.getModel("flow");
@@ -125,34 +126,44 @@ module.exports = function(app){
     
     app.route('/flow/:flow_id')
          .get(function(req, res,next){
+        	 var flow_id = req.params.flow_id
              var Flow= modelfactory.getModel("flow");
-             Flow
-                .find({ flowid: req.params.flow_id })
-                .populate('creator')
-                .exec(function (err, flows) {
-                  if (err) throw(err);
-                  if (flows.length>0){
-                    if (flows[0].is_public){
-                        flows[0].is_readable = true;
-                        flows[0].is_writable = false;
-                    }
-                    
-                    if (req.user){
-                        if (flows[0].creator._id.toString() == req.user._id){
-                            flows[0].is_readable = true;
-                            flows[0].is_writable = true;
-                       }
-                    }
-                    
+             
+             if (uuidvalidate(flow_id)){
+            	 logger.info('UUID as ID was identified');
+            	 res.redirect('/');
+             }
+             else{
 
-                    if (flows[0].is_readable)
-                        return res.render('./flow/read', { flow: flows[0] });
-                    else
-                        return res.render('./error', { error: "You don't have permissions to access this flow!" });
-                }
-                else 
-                     return res.render('./error',{error:"The document you are looking for does not exist!"});
-                });
+	             Flow
+	                .find({ flowid: flow_id })
+	                .populate('creator')
+	                .exec(function (err, flows) {
+	                  if (err) throw(err);
+	                  if (flows.length>0){
+	                    if (flows[0].is_public){
+	                        flows[0].is_readable = true;
+	                        flows[0].is_writable = false;
+	                    }
+	                    
+	                    if (req.user){
+	                        if (flows[0].creator._id.toString() == req.user._id){
+	                            flows[0].is_readable = true;
+	                            flows[0].is_writable = true;
+	                       }
+	                    }
+	                    
+	
+	                    if (flows[0].is_readable)
+	                        return res.render('./flow/read', { flow: flows[0] });
+	                    else
+	                        return res.render('./error', { error: "You don't have permissions to access this flow!" });
+	                }
+	                else 
+	                     return res.render('./error',{error:"The document you are looking for does not exist!"});
+	                });
+             }
+            	 
             })
      
 

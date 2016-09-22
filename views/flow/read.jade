@@ -10,8 +10,16 @@ append scripts
                 myDiagram.model = go.Model.fromJson(!{JSON.stringify(flow.doc)});
              }catch(err){
                 console.log(err);
-             }
-            })
+             };
+             
+             $('button#ExportBtn').click(function(){
+                 var svg = makeSVG();
+                 newTab = window.open();
+                 div = document.createElement("div");
+                 div.appendChild(svg);
+                 newTab.document.body.innerHTML = div.innerHTML;
+             })  
+        })
 
 append main_nav_header
     ol.breadcrumb
@@ -62,3 +70,5 @@ append content
         .col-md-10
             .col-md-12
                 #myDiagramDiv(style='border: solid 1px gray; height: 620px')
+                .btn-toolbar
+                    button#ExportBtn.btn.btn-primary.pull-right Export

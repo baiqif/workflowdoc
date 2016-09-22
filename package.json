@@ -24,6 +24,7 @@
     "winston":"*",
     "passport-ldapauth":"~0.5.0",
     "bootstrap-validator":"*",
-    "ldapjs":"*"
+    "ldapjs":"*",
+    "uuid-validate":"*"
   }
 }
